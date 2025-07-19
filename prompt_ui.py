@@ -1,7 +1,7 @@
 from langchain_openai import ChatOpenAI
 import streamlit as st
 from dotenv import load_dotenv
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate, load_prompt
 
 load_dotenv()
 model = ChatOpenAI()
@@ -38,19 +38,7 @@ length_input = st.selectbox(
     ]
 )
 
-# Template
-template = PromptTemplate(
-    """ 
-    Explain the research paper 
-    '{paper_input}' 
-    in a 
-    {style_input} 
-    style. Make the explanation 
-    {length_input}.
-    """,
-    input_variables= ['paper_input', 'style_input', 'length_input']
-)
-
+template = load_prompt('template.json')
 prompt = template.invoke({
     'paper_input': paper_input,
     'style_input': style_input,
